@@ -4,69 +4,20 @@ import { UpdateNenjasDto } from './dto/update-nenja.dto';
 
 @Injectable()
 export class NenjasService {
-    private ninjas = [
-        { id: 0, name: 'top', price: 100, description: "comfortable on skin" },
-        { id: 1, name: 'skirt', price: 100, description: "comfortable on female skin" },
+    products = [
+        { phone: "iPhone 15", price: 999, color: "Black" },
+        { phone: "Samsung Galaxy S23", price: 899, color: "White" },
+        { phone: "Google Pixel 8", price: 799, color: "Obsidian" },
+        { phone: "OnePlus 11", price: 749, color: "Green" },
+        { phone: "Xiaomi 13 Pro", price: 699, color: "Blue" },
+        { phone: "Sony Xperia 5 V", price: 849, color: "Gray" },
+        { phone: "Motorola Edge+", price: 799, color: "Red" },
+        { phone: "Asus ROG Phone 7", price: 1099, color: "Black" },
+        { phone: "Nokia X30", price: 649, color: "Sky" },
+        { phone: "Huawei P60 Pro", price: 899, color: "Silver" }
     ];
 
-    getNenjas(name?: string) {
-        if (name) {
-            return this.ninjas.filter((ninja) => ninja.name === name);
-        }
-        return this.ninjas;
-    }
-
-    getNenja(id: number) {
-        const ninja = this.ninjas.find((ninja) => ninja.id === id);
-        console.log('ninja', ninja);
-
-        if (!ninja) {
-            throw new Error('Ninja not found');
-        }
-
-        return ninja;
-    }
-
-    createNenjas(createNenjaDto: CreateNenjaDto) {
-        const newNinja = {
-            ...createNenjaDto,
-            id: Date.now(),
-        }
-        this.ninjas.push(newNinja)
-
-        return newNinja;
-    }
-
-    // updateNenjas(id: number, updateNenjaDto: UpdateNenjasDto) {
-    //     this.ninjas = this.ninjas.map((el) => {
-    //         if (el.id === id) {
-    //             return { ...el, ...updateNenjaDto }
-    //         }
-    //         return el;
-    //     })
-
-    //     return this.getNenja(id)
-    // }
-
-    updateNenjas(id: number, updateNenjaDto: UpdateNenjasDto) {
-        // Check if ninja exists before updating
-        const existingNinja = this.getNenja(id);
-        if (!existingNinja) {
-            throw new Error(`Ninja with ID ${id} not found`);
-        }
-
-        this.ninjas = this.ninjas.map((el) =>
-            el.id === id ? { ...el, ...updateNenjaDto } : el
-        );
-
-        return this.getNenja(id); // Return updated ninja
-    }
-
-    removeNenja(id: number) {
-        const toBeRemoved = this.getNenja(id);
-
-        this.ninjas = this.ninjas.filter((el) => el.id === id);
-
-        return toBeRemoved;
+    find() {
+        return this.products
     }
 }

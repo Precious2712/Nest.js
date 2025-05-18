@@ -15,7 +15,9 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  contact: string
+  @MinLength(11)
+  contact: string;
+
 
   @IsString()
   @IsNotEmpty()
@@ -29,4 +31,8 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   league: string
+
+  @IsString()
+  @IsNotEmpty()
+  team: string
 }

@@ -18,7 +18,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
@@ -26,7 +26,8 @@ export class UsersController {
   }
 
   @Post('login')
-  async login(@Body('email') email: string, @Body('password') password: string) {
+  async login(@Body() body: { email: string; password: string }) {
+    const { email, password } = body;
     return this.usersService.login(email, password);
   }
 
@@ -42,8 +43,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User> {
-    const user = await this.usersService.findOne(id);
+  async findOne(@Param('id') _id: string): Promise<User> {
+    const user = await this.usersService.findOne(_id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -51,8 +52,8 @@ export class UsersController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
-    const updatedUser = await this.usersService.update(id, updateUserDto);
+  async update(@Param('id') _id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.usersService.update(_id, updateUserDto);
     if (!updatedUser) {
       throw new NotFoundException('User not found');
     }
@@ -60,8 +61,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<{ message: string }> {
-    const deletedUser = await this.usersService.remove(id);
+  async remove(@Param('id') _id: string): Promise<{ message: string }> {
+    const deletedUser = await this.usersService.remove(_id);
     if (!deletedUser) {
       throw new NotFoundException('User not found');
     }
