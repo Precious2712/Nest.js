@@ -12,7 +12,7 @@ export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto): Promise<any> {
     const existingUser = await this.userModel.findOne({ email: createUserDto.email });
@@ -37,16 +37,7 @@ export class UsersService {
     return {
       message: 'User created successfully',
       token,
-      user: {
-        id: savedUser._id,
-        email: savedUser.email,
-        firstname: savedUser.firstname,
-        lastname: savedUser.lastname,
-        countryClub: savedUser.countryClub,
-        league: savedUser.league,
-        contact: savedUser.contact,
-        team: savedUser.team
-      },
+      savedUser
     };
   }
 
@@ -56,7 +47,7 @@ export class UsersService {
     }
 
     const user = await this.userModel.findOne({ email });
-    console.log('Found user:', user);
+    // console.log('Found user:', user);
 
     if (!user) {
       throw new BadRequestException('Invalid email or password');
@@ -74,19 +65,10 @@ export class UsersService {
     return {
       message: 'Login successful',
       token,
-      user: {
-        id: user._id,
-        email: user.email,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        countryClub: user.countryClub,
-        league: user.league,
-        contact: user.contact,
-        team: user.team
-      },
+      user
     };
   }
-  
+
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
@@ -95,8 +77,27 @@ export class UsersService {
     return this.userModel.findById(_id).exec();
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
-    return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
+  async update(_id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
+    return this.userModel.findByIdAndUpdate(_id, updateUserDto, { new: true }).exec();
+  }
+
+  async fundWallet(_id: string, amount: number): Promise<User> {
+    const user = await this.userModel.findById(_id);
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    const parsedAmount = Number(amount);
+    console.log(parsedAmount);
+    
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      throw new BadRequestException('Amount must be a valid positive number');
+    }
+
+    user.wallet += parsedAmount;
+    console.log(user.wallet);
+    
+    return await user.save();
   }
 
   async remove(_id: string): Promise<User | null> {

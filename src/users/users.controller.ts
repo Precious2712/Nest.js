@@ -59,6 +59,15 @@ export class UsersController {
     }
     return updatedUser;
   }
+  
+  @Put(':id/wallet')
+  async updateWallet(
+    @Param('id') _id: string,
+    @Body('amount') amount: number
+  ) {
+    const numericAmount = Number(amount);
+    return this.usersService.fundWallet(_id, numericAmount);
+  }
 
   @Delete(':id')
   async remove(@Param('id') _id: string): Promise<{ message: string }> {

@@ -15,8 +15,9 @@ import { NenjasService } from './nenjas.service';
 @Controller('nenjas')
 export class NenjasController {
     constructor(private readonly ninjasService: NenjasService) {}
-    @Get()
-    get() {
-        return this.ninjasService.find();
-    }
+    
+    @Post()
+    async create(@Body() CreateNenjaDto: CreateNenjaDto) {
+        return this.ninjasService.createLeague(CreateNenjaDto);
+    } 
 }
