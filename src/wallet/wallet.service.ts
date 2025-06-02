@@ -44,7 +44,12 @@ export class WalletService {
   async findAllByUserId(userId: string) {
     const userObjectId = new Types.ObjectId(userId);
     const userItems = await this.walletModel.find({ user: userObjectId }).lean();
-    console.log('user item', userItems);
+    // console.log('user item', userItems);
     return userItems;
+  }
+
+  async deleteById(_id: string) {
+    const id = await this.walletModel.findByIdAndDelete(_id).exec();
+    return id;
   }
 }

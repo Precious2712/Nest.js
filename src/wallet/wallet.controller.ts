@@ -4,7 +4,8 @@ import {
     Post,
     Param,
     Get,
-    NotFoundException
+    NotFoundException,
+    Delete
 } from "@nestjs/common";
 import { WalletService } from "./wallet.service";
 
@@ -29,5 +30,14 @@ export class WalletController {
         } catch (error) {
             throw new NotFoundException(error.message)
         }
+    }
+
+    @Delete('/delete/:id')
+    async remove(@Param('id') _id: string): Promise<{ message: string }> {
+        const deletedPlayer  = await this.walletService.deleteById(_id);
+        if (!deletedPlayer ) {
+            throw new NotFoundException('User not found');
+        }
+        return { message: 'User deleted successfully' };
     }
 };

@@ -7,7 +7,6 @@ export type WalletDocument = Wallet & Document;
 export class Wallet extends Document {
     @Prop({
         required: true,
-        // message: 'name is required'
     })
     name: string;
 
