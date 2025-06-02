@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './users/auth/auth.module';
+import { WalletModule } from './wallet/wallet.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { AuthModule } from './users/auth/auth.module';
     MongooseModule.forRoot(process.env.mongooseDB_URL || 'mongodb://localhost:27017/transfer-market'),
     NenjasModule,
     UsersModule,
-    AuthModule, // ✅ Add this
+    AuthModule,
+    WalletModule, 
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -48,9 +48,6 @@ export class League extends Document {
 
   @Prop({ type: [LeagueNameSchema], default: [] })
   leagueName: LeagueName[];
-
-  // @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  // user: Types.ObjectId;
 }
 
 export const LeagueSchema = SchemaFactory.createForClass(League);

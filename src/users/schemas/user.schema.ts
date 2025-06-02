@@ -1,8 +1,10 @@
-import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
+
+export type UserDocument = User & Document<Types.ObjectId>;
 
 @Schema({ timestamps: true })
-export class User extends Document {
+export class User {
   @Prop({ required: true, trim: true })
   firstname: string;
 
@@ -15,19 +17,13 @@ export class User extends Document {
   @Prop({ required: true, minlength: 8 })
   password: string;
 
-  @Prop({ required: true })
-  contact: string;
-
-  @Prop({ required: true })
+  @Prop({ required: true, enum: ['England', 'France', 'Italy', 'Germany', 'Spain'] })
   countryClub: string;
-  enum: ['England, France, Italy, Germany, Spain']
 
   @Prop({ required: true })
   league: string;
 
-  @Prop({
-    required: true
-  })
+  @Prop({ required: true })
   team: string;
 
   @Prop({ default: 0 })

@@ -38,4 +38,12 @@ export class NenjasService {
 
         return await existingLeague.save();
     }
+
+    async getAll(): Promise<League[]> {
+        const leagues = await this.leagueModel.find().lean(); 
+        if (leagues.length === 0) {
+            throw new BadRequestException('No leagues found');
+        }
+        return leagues;
+    }
 }

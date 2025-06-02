@@ -47,7 +47,6 @@ export class UsersService {
     }
 
     const user = await this.userModel.findOne({ email });
-    // console.log('Found user:', user);
 
     if (!user) {
       throw new BadRequestException('Invalid email or password');
@@ -69,14 +68,6 @@ export class UsersService {
     };
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
-  }
-
-  async findOne(_id: string): Promise<User | null> {
-    return this.userModel.findById(_id).exec();
-  }
-
   async update(_id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
     return this.userModel.findByIdAndUpdate(_id, updateUserDto, { new: true }).exec();
   }
@@ -89,14 +80,14 @@ export class UsersService {
 
     const parsedAmount = Number(amount);
     console.log(parsedAmount);
-    
+
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
       throw new BadRequestException('Amount must be a valid positive number');
     }
 
     user.wallet += parsedAmount;
     console.log(user.wallet);
-    
+
     return await user.save();
   }
 

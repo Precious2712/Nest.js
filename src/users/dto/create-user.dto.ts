@@ -15,12 +15,6 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(11)
-  contact: string;
-
-
-  @IsString()
-  @IsNotEmpty()
   countryClub: string
 
   @IsString()
