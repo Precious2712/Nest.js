@@ -6,7 +6,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
-    origin: 'http://localhost:3000', 
+    origin: [
+      'http://localhost:3000', 
+      'https://transfer-room.vercel.app'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, 
   });
