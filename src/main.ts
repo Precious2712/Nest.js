@@ -7,12 +7,14 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     origin: [
-      'http://localhost:3000', 
+      'http://localhost:3000',
       'https://transfer-room.vercel.app'
     ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
+
   await app.listen(process.env.PORT ?? 4000);
 }
 bootstrap();
